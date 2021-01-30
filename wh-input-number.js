@@ -21,6 +21,7 @@ import {LitElement, html, css} from 'lit-element';
  * @csspart button - The button
  */
 export class WhInputNumber extends LitElement {
+
   static get styles() {
     return css`
       * {
@@ -84,8 +85,7 @@ export class WhInputNumber extends LitElement {
 		return html`
       <div class="input-container">
         <input .value=${this.value}  type="${this.type}" name=${this.name} id=${this.name} placeholder="-123.0"
-          @input=${(e)=> { this.value = e.target.value; this.dispatchEvent(new Event('input')); }}
-          @change=${(e)=>this.dispatchEvent(new Event('change'))} 
+          @input=${(e)=> { this.value = e.target.value; this.validateInput() }}           
         >
         <label for=${this.name}><slot></slot></label>
 			</div>
@@ -106,13 +106,12 @@ export class WhInputNumber extends LitElement {
     if (this.value == undefined) {
       this.value = '';
     }
-  }
-
+  } 
   
-
-  _onClick() {
-    this.count++;
+  validateInput() {
+    console.log("inside input", this.value);
   }
+
 }
 
 window.customElements.define('wh-input-number', WhInputNumber);
