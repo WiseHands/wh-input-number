@@ -84,8 +84,10 @@ export class WhInputNumber extends LitElement {
 	render() {
 		return html`
       <div class="input-container">
-        <input .value=${this.value}  type="${this.type}" name=${this.name} id=${this.name} placeholder="-123.0"
-          @input=${(e)=> { this.value = e.target.value; this.validateInput() }}           
+        <input id=${this.name} type="number" .value=${this.value} name=${this.name} 
+          pattern="^[0-9]*\.?[0-9]*$" placeholder="-123.0"
+          @input=${(event)=> { this.value = event.target.value; this.validateInput(event) }}
+          required           
         >
         <label for=${this.name}><slot></slot></label>
 			</div>
@@ -109,7 +111,7 @@ export class WhInputNumber extends LitElement {
   } 
   
   validateInput() {
-    console.log("inside input", this.value);
+     console.log("inside input", this.value);
   }
 
 }
