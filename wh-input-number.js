@@ -20,17 +20,40 @@ import {LitElement, html, css} from 'lit-element';
  * @slot - This element has a slot
  * @csspart button - The button
  */
-export class MyElement extends LitElement {
+export class WhInputNumber extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block;
-        border: solid 1px gray;
+        display: flex;
         padding: 16px;
-        max-width: 800px;
+        
+      }
+      .number-input {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      label {
+			  font-size: 15px;
+			  padding: 0 0 2px 15px;
+			}
+      input {
+ 			  font-size: 20px;
+ 			  border: none;
+				border-bottom: 1px solid gray;
       }
     `;
   }
+	
+	render() {
+		return html`
+      <div class="number-input">
+		    <label>Only number</label>
+		    <input placeholder="-123.0">
+			</div>
+    
+    `;
+	}
 
   static get properties() {
     return {
@@ -52,19 +75,11 @@ export class MyElement extends LitElement {
     this.count = 0;
   }
 
-  render() {
-    return html`
-      <h1>Hello, ${this.name}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
-      <slot></slot>
-    `;
-  }
+  
 
   _onClick() {
     this.count++;
   }
 }
 
-window.customElements.define('my-element', MyElement);
+window.customElements.define('wh-input-number', WhInputNumber);
