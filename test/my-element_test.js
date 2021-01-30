@@ -1,16 +1,16 @@
-import {MyElement} from '../my-element.js';
+import {MyElement} from '../wh-input-number.js';
 import {fixture, html} from '@open-wc/testing';
 
 const assert = chai.assert;
 
-suite('my-element', () => {
+suite('wh-input-number', () => {
   test('is defined', () => {
-    const el = document.createElement('my-element');
+    const el = document.createElement('wh-input-number');
     assert.instanceOf(el, MyElement);
   });
 
   test('renders with default values', async () => {
-    const el = await fixture(html`<my-element></my-element>`);
+    const el = await fixture(html`<wh-input-number></wh-input-number>`);
     assert.shadowDom.equal(
       el,
       `
@@ -22,7 +22,7 @@ suite('my-element', () => {
   });
 
   test('renders with a set name', async () => {
-    const el = await fixture(html`<my-element name="Test"></my-element>`);
+    const el = await fixture(html`<wh-input-number name="Test"></wh-input-number>`);
     assert.shadowDom.equal(
       el,
       `
@@ -34,7 +34,7 @@ suite('my-element', () => {
   });
 
   test('handles a click', async () => {
-    const el = await fixture(html`<my-element></my-element>`);
+    const el = await fixture(html`<wh-input-number></wh-input-number>`);
     const button = el.shadowRoot.querySelector('button');
     button.click();
     await el.updateComplete;

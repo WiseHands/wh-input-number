@@ -23,33 +23,71 @@ import {LitElement, html, css} from 'lit-element';
 export class WhInputNumber extends LitElement {
   static get styles() {
     return css`
-      :host {
-        display: flex;
-        padding: 16px;
-        
-      }
-      .number-input {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      label {
-			  font-size: 15px;
-			  padding: 0 0 2px 15px;
-			}
+      * {
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+        }
+
       input {
- 			  font-size: 20px;
- 			  border: none;
-				border-bottom: 1px solid gray;
+        box-sizing: border-box;
+        padding: 0px 12px;
+        width: 100%;
+        height: 56px;
+        background: #fff;
+        border: 1px solid #bdbdbd;
+        border-radius: 4px;
+        position: relative;
+        font-size: 16pt;
+        z-index: 1;
+        -webkit-appearance: none;
+        transition: border 0.2s cubic-bezier(1, 0, 0, 1);
       }
+      input:focus {
+        outline: none;
+        border: 1px solid #6200ee;
+      }
+      input:focus ~ label {
+        color: #6200ee;
+        font-weight: 500;
+      }     
+      label {
+        z-index: 2;
+        position: absolute;
+        top: 18px;
+        left: 2px;
+        color: #222;
+        background: #fff;
+        transition: transform 0.2s cubic-bezier(1, 0, 0, 1), font-size 0.2s cubic-bezier(1, 0, 0, 1), color 0.2s cubic-bezier(1, 0, 0, 1);
+        transform: translate(4px, -27px);
+        font-size: 12px;
+        pointer-events: none;
+      }
+      label,
+      label supports:placeholder-shown {
+        transform: translate(0px, 0px);
+        font-size: 1rem;
+        color: rgba(0,0,0,.6);
+        padding: 0 4px;
+      }
+      input:focus ~ label,
+      input:not(:placeholder-shown) ~ label {
+        transform: translate(4px, -27px);
+        font-size: 12px;
+      }
+      .input-container {
+        position: relative;
+        margin-top: 12px;
+      }            
     `;
   }
 	
 	render() {
 		return html`
-      <div class="number-input">
-		    <label>Only number</label>
-		    <input placeholder="-123.0">
+      <div class="input-container">
+        <input .value=${this.value}  type="${this.type}" name=${this.name} id=${this.name} placeholder="-123.0"
+          @input=${(e)=> { this.value = e.target.value; this.dispatchEvent(new Event('input')); }}
+          @change=${(e)=>this.dispatchEvent(new Event('change'))} 
+        >
+        <label for=${this.name}><slot></slot></label>
 			</div>
     
     `;
@@ -57,22 +95,17 @@ export class WhInputNumber extends LitElement {
 
   static get properties() {
     return {
-      /**
-       * The name to say "Hello" to.
-       */
-      name: {type: String},
-
-      /**
-       * The number of times the button has been clicked.
-       */
-      count: {type: Number},
+      type: Number,
+      value: String,
+      name: String
     };
   }
 
   constructor() {
     super();
-    this.name = 'World';
-    this.count = 0;
+    if (this.value == undefined) {
+      this.value = '';
+    }
   }
 
   
