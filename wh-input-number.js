@@ -84,7 +84,7 @@ export class WhInputNumber extends LitElement {
 	render() {
 		return html`
       <div class="input-container">
-        <input id=${this.name} type="number" .value=${this.value} name=${this.name} 
+        <input id=${this.name} type="text" .value=${this.value} name=${this.name} 
           pattern="^[0-9]*\.?[0-9]*$" placeholder="-123.0"
           @input=${(event)=> { this.value = event.target.value; this.validateInput(event) }}
           required           
@@ -97,7 +97,6 @@ export class WhInputNumber extends LitElement {
 
   static get properties() {
     return {
-      type: Number,
       value: String,
       name: String
     };
@@ -111,7 +110,12 @@ export class WhInputNumber extends LitElement {
   } 
   
   validateInput() {
-     console.log("inside input", this.value);
+    const isMath = /^[-+]?\d+(\.\d+)?$/.test(this.value)
+    if (isMath) {
+      console.log("is ok", isMath, this.value);
+    } else {
+      console.log("pls enter correct number", isMath, this.value);
+    }
   }
 
 }
