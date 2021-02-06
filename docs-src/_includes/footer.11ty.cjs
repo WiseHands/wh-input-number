@@ -3,7 +3,7 @@ module.exports = function(data) {
 <footer>
   <p>
     Made with
-    <a href="https://github.com/PolymerLabs/lit-element-starter-js">lit-element-starter-js</a>
+    <a href="https://github.com/PolymerLabs/wh-input-number">wh-input-number</a>
   </p>
 </footer>`;
 };

@@ -1,17 +1,3 @@
-/**
- * @license
- * Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at
- * http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at
- * http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at
- * http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at
- * http://polymer.github.io/PATENTS.txt
- */
-
 import {LitElement, html, css} from 'lit-element';
 
 /**
@@ -77,45 +63,65 @@ export class WhInputNumber extends LitElement {
       .input-container {
         position: relative;
         margin-top: 12px;
-      }            
+      }   
+      .error-span {
+          color: red;
+          min-height: 1.2em;
+      }         
     `;
   }
 	
 	render() {
-		return html`
-      <div class="input-container">
+    return html`
+      <link rel="stylesheet" href="node_modules/material-icons/iconfont/material-icons.css">
+      <span class="material-icons">home</span>
+      <div class="input-container">        
         <input id=${this.name} type="text" .value=${this.value} name=${this.name} 
           pattern="^[0-9]*\.?[0-9]*$" placeholder="-123.0"
           @input=${(event)=> { this.value = event.target.value; this.validateInput(event) }}
           required           
-        >
-        <label for=${this.name}><slot></slot></label>
-			</div>
+        >    
+        <label for=${this.name}><slot></slot></label>    
+      </div>
+      <span class="error-span" >${this.errorMessage}</span>
     
     `;
 	}
 
   static get properties() {
     return {
+      errorMessage: {
+        type: String,
+        value: ''
+      },
       value: String,
       name: String
     };
   }
 
+  
+
   constructor() {
+    
     super();
     if (this.value == undefined) {
       this.value = '';
-    }
+    }    
   } 
   
   validateInput() {
     const isMath = /^[-+]?\d+(\.\d+)?$/.test(this.value)
-    if (isMath) {
-      console.log("is ok", isMath, this.value);
+    
+    if (!isMath) {
+      this.showValidation();
     } else {
-      console.log("pls enter correct number", isMath, this.value);
+      this.errorMessage = '';
     }
+    
+  }
+
+  showValidation() {
+    this.errorMessage = 'Only numbers';
   }
 
 }
